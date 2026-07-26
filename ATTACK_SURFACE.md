@@ -149,7 +149,7 @@ Attack Surface Components
 
 | Component | Severity | Finding |
 |---|---|---|
-| 13 integration test `.dart` files | 🔴 CRITICAL | Live CHR admin password `Ssh19233@` hardcoded and committed to git |
+| 13 integration test `.dart` files | 🔴 CRITICAL | Live CHR admin password `[REDACTED — rotated via SECURITY_HOTFIX_001]` hardcoded and committed to git |
 | `chr.txt` / `chr6.txt` | ✅ Not committed | Correctly gitignored |
 | Test fixtures | ✅ Safe | No real credentials |
 

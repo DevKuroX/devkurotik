@@ -10,10 +10,14 @@ library;
 import 'package:mikrotik_sdk/mikrotik_sdk.dart';
 import 'package:test/test.dart';
 
-const _host = '139.162.35.252';
-const _username = 'admin';
-const _password = 'Ssh19233@'; // CHR v6 — password set via weblish
-const _port = 8728;
+import 'integration_credentials.dart';
+
+// Credentials loaded from env vars (CHR_V6_*) or chr6.txt (gitignored).
+// Never hardcode credentials. See integration_credentials.dart.
+String get _host => chrV6Host;
+String get _username => chrV6User;
+String get _password => chrV6Password;
+int get _port => chrV6Port;
 
 void main() {
   late MikrotikClient client;
@@ -166,7 +170,7 @@ void main() {
 
     setUp(() {
       detector = const CapabilityDetector(timeout: Duration(seconds: 15));
-      credentials = const MikrotikCredentials(
+      credentials = MikrotikCredentials(
         host: _host,
         username: _username,
         password: _password,

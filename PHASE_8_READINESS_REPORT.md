@@ -95,7 +95,7 @@ These actions must be taken NOW — not as part of Phase 8 implementation — be
 
 ### 🔴 IMMEDIATE ACTION: Rotate CHR Credentials (C-1)
 
-**The admin password `Ssh19233@` for CHR v7 (54.147.121.92:8728) and CHR v6 (139.162.35.252:8728) is committed in git history across 13 test files.**
+**The admin password `[REDACTED — rotated via SECURITY_HOTFIX_001]` for CHR v7 (54.147.121.92:8728) and CHR v6 (139.162.35.252:8728) is committed in git history across 13 test files.**
 
 This is a violation of CLAUDE.md §12:
 > *"Credentials must come from `chr.txt`/`chr6.txt` — never hardcoded in committed files."*
@@ -119,12 +119,12 @@ Phase 8 implementation work is BLOCKED by or must resolve these two issues as fi
 
 ### Blocker 1 — C-1: Integration Test Credential Security
 
-**Current state:** 13 integration test files contain `const _password = 'Ssh19233@'`.
+**Current state:** 13 integration test files contain `const _password = '[REDACTED — rotated via SECURITY_HOTFIX_001]'`.
 
 **Required resolution:**
 ```dart
 // WRONG (current — must fix):
-const _password = 'Ssh19233@';
+const _password = '[REDACTED — rotated via SECURITY_HOTFIX_001]';
 
 // CORRECT (Phase 8 target):
 final _password = () {

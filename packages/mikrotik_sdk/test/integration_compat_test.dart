@@ -13,10 +13,14 @@ library;
 import 'package:mikrotik_sdk/mikrotik_sdk.dart';
 import 'package:test/test.dart';
 
-const _host = '54.147.121.92';
-const _username = 'admin';
-const _password = 'Ssh19233@';
-const _port = 8728;
+import 'integration_credentials.dart';
+
+// Credentials loaded from env vars (CHR_V7_*) or chr.txt (gitignored).
+// Never hardcode credentials. See integration_credentials.dart.
+String get _host => chrV7Host;
+String get _username => chrV7User;
+String get _password => chrV7Password;
+int get _port => chrV7Port;
 
 void main() {
   group('CapabilityDetector — CHR v7 live integration', () {
@@ -25,7 +29,7 @@ void main() {
 
     setUp(() {
       detector = const CapabilityDetector(timeout: Duration(seconds: 15));
-      credentials = const MikrotikCredentials(
+      credentials = MikrotikCredentials(
         host: _host,
         username: _username,
         password: _password,

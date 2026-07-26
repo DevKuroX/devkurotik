@@ -9,10 +9,14 @@ library;
 import 'package:mikrotik_sdk/mikrotik_sdk.dart';
 import 'package:test/test.dart';
 
-const _host = '139.162.35.252';
-const _username = 'admin';
-const _password = 'Ssh19233@';
-const _port = 8728;
+import 'integration_credentials.dart';
+
+// Credentials loaded from env vars (CHR_V6_*) or chr6.txt (gitignored).
+// Never hardcode credentials. See integration_credentials.dart.
+String get _host => chrV6Host;
+String get _username => chrV6User;
+String get _password => chrV6Password;
+int get _port => chrV6Port;
 
 const _testProfile = 'p6test-v6-daily';
 
