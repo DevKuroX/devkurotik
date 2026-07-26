@@ -1,0 +1,10 @@
+{
+  "profileName": "daily",
+  "mode": "none",
+  "price": "0",
+  "validity": "",
+  "sellingPrice": "0",
+  "macLock": false,
+  "description": "Mode=none, no price, no MAC lock. Produces empty on-login.",
+  "routerOsVersion": "7.15.1"
+}

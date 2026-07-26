@@ -1,0 +1,10 @@
+{
+  "profileName": "daily",
+  "mode": "remove",
+  "price": "5000",
+  "validity": "1d",
+  "sellingPrice": "5000",
+  "macLock": false,
+  "description": "Mode=remove, price 5000, validity 1d, no MAC lock.",
+  "routerOsVersion": "7.15.1"
+}

@@ -1,0 +1,10 @@
+{
+  "profileName": "monthly",
+  "mode": "remove_record",
+  "price": "50000",
+  "validity": "30d",
+  "sellingPrice": "0",
+  "macLock": false,
+  "description": "Mode=removeRecord, monthly, no selling price.",
+  "routerOsVersion": "6.40.x"
+}

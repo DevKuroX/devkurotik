@@ -1,0 +1,10 @@
+{
+  "profileName": "daily",
+  "mode": "notice",
+  "price": "5000",
+  "validity": "1d",
+  "sellingPrice": "5000",
+  "macLock": false,
+  "description": "Mode=notice, basic daily profile.",
+  "routerOsVersion": "7.15.1"
+}

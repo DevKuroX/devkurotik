@@ -1,0 +1,10 @@
+{
+  "profileName": "weekly",
+  "mode": "remove",
+  "price": "20000",
+  "validity": "7d",
+  "sellingPrice": "20000",
+  "macLock": true,
+  "description": "Mode=remove, weekly profile, with MAC lock.",
+  "routerOsVersion": "6.49.17"
+}

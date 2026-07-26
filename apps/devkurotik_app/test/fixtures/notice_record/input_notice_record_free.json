@@ -1,0 +1,10 @@
+{
+  "profileName": "trial",
+  "mode": "notice_record",
+  "price": "0",
+  "validity": "1h",
+  "sellingPrice": "0",
+  "macLock": false,
+  "description": "Mode=noticeRecord, trial/free profile, no price.",
+  "routerOsVersion": "6.40.x"
+}

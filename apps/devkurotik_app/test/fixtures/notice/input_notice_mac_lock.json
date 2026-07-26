@@ -1,0 +1,10 @@
+{
+  "profileName": "1hour",
+  "mode": "notice",
+  "price": "2000",
+  "validity": "1h",
+  "sellingPrice": "2000",
+  "macLock": true,
+  "description": "Mode=notice, 1-hour profile with MAC lock.",
+  "routerOsVersion": "6.49.17"
+}

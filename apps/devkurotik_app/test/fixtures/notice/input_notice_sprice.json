@@ -1,0 +1,10 @@
+{
+  "profileName": "promo",
+  "mode": "notice",
+  "price": "3000",
+  "validity": "2d",
+  "sellingPrice": "2500",
+  "macLock": false,
+  "description": "Mode=notice, promo profile, different selling price.",
+  "routerOsVersion": "6.40.x"
+}

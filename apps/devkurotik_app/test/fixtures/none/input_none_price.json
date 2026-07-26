@@ -1,0 +1,10 @@
+{
+  "profileName": "daily",
+  "mode": "none",
+  "price": "5000",
+  "validity": "",
+  "sellingPrice": "0",
+  "macLock": false,
+  "description": "Mode=none, with price, no MAC lock. Produces none+price on-login.",
+  "routerOsVersion": "7.15.1"
+}

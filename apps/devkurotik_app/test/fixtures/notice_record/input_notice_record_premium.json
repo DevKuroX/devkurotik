@@ -1,0 +1,10 @@
+{
+  "profileName": "premium",
+  "mode": "notice_record",
+  "price": "100000",
+  "validity": "30d",
+  "sellingPrice": "95000",
+  "macLock": true,
+  "description": "Mode=noticeRecord, premium profile with MAC lock.",
+  "routerOsVersion": "6.49.17"
+}

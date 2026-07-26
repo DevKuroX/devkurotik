@@ -1,0 +1,10 @@
+{
+  "profileName": "daily",
+  "mode": "remove_record",
+  "price": "5000",
+  "validity": "1d",
+  "sellingPrice": "5000",
+  "macLock": false,
+  "description": "Mode=removeRecord, basic daily profile with sale recording.",
+  "routerOsVersion": "7.15.1"
+}
