@@ -219,6 +219,7 @@ None. All deliverables and acceptance criteria implemented exactly as specified 
 | Running as root | INFO | Flutter/Dart warns about running as root. This is a CI/development environment constraint, not a production issue. Does not affect build correctness. |
 | Dependency version drift | INFO | Several approved packages have newer major versions available. Version constraints in pubspec.yaml use `^` pinning. Updates to be evaluated at Phase 1 start. |
 | `pubspec.lock` not committed | INFO | `pubspec.lock` is currently in `.gitignore`. For reproducible builds in CI, consider committing it. This is a deployment policy decision for the project owner. |
+| GitHub token missing `workflow` scope | INFO | The current `ghp_*` token has `repo` scope but not `workflow` scope. The CI workflow file (`.github/workflows/ci.yml`) exists in the local repository and is committed locally, but **cannot be pushed to GitHub** until the token is regenerated with `workflow` scope. The workflow file is correct and ready — this is a push-auth constraint only. Action required: regenerate token at https://github.com/settings/tokens with `workflow` scope added, then `git push origin main`. |
 
 ---
 
