@@ -43,6 +43,10 @@ dependencies:
   # Biometric auth — approved baseline
   local_auth: ^2.3.0
 
+  # MikroTik SDK — Phase 1 (local package)
+  mikrotik_sdk:
+    path: ../../packages/mikrotik_sdk
+
   # Icons
   cupertino_icons: ^1.0.8
 
