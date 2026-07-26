@@ -209,64 +209,80 @@ If the project owner asks Claude to work on DevKuroTik, the correct safe interpr
 
 ## 12. Real Router Test Environment
 
-A live MikroTik CHR (Cloud Hosted Router) is available for integration testing.
+Two live MikroTik CHR instances are available for integration testing.
 
-### Credentials
+### Instances
 
-Credentials are stored in `chr.txt` (gitignored, never committed).
+| Instance | File | IP | Port | Username | Version | Provider |
+|---|---|---|---|---|---|---|
+| CHR v7 | `chr.txt` | 54.147.121.92 | 8728 | admin | 7.15.1 (stable) | AWS EC2 t3.small |
+| CHR v6 | `chr6.txt` | 139.162.35.252 | 8728 | admin | 6.49.17 (stable) | Linode nanode ap-south |
 
-Format of `chr.txt`:
-```
-CHR (Cloud Hosted Router) — Real Test Environment
-IP: <ip>
-Password: <password>
-Version: RouterOS vX
-Note: For real integration testing
-```
+Both files are gitignored and must never be committed.
+
+**Both instances must remain alive until Phase 10 is complete.**
+
+### Firewall
+
+- CHR v6 uses Linode firewall `CHR` (ID 88330218) — ports 8728, 8729, 8291, 80, 22, 21, 23 open.
+- CHR v7 uses AWS Security Group — port 8728 open.
+- IP mungkin diblokir ISP Indonesia — akses manual via VPN atau weblish Linode.
+- API tests dari server/CI tidak terpengaruh pemblokiran ISP.
 
 ### When Claude Must Use the CHR
 
-Claude **must** run real-router integration tests against the CHR when:
+Claude **must** run real-router integration tests against both CHR instances when:
 
-| Phase | Trigger |
-|---|---|
-| Phase 1 | SDK transport, auth, and command execution tests |
-| Phase 2 | Health check integration (connectivity + auth validation) |
-| Phase 3 | Dashboard data fetch from real router |
-| Phase 4 | Hotspot user list/add from real router |
-| Phase 5 | Voucher print flow from real router |
-| Phase 6 | Full regression suite against real router (mandatory gate) |
-| Any phase | Whenever the phase document requires real-router validation evidence |
+| Phase | Trigger | Primary | Secondary |
+|---|---|---|---|
+| Phase 1 | SDK transport, auth, command execution | v7 | v6 |
+| Phase 2 | Health check integration | v7 | v6 |
+| Phase 3 | Dashboard data fetch | v7 | v6 |
+| Phase 4 | Hotspot user list/add | v7 | v6 |
+| Phase 5 | Voucher print flow | v7 | v6 |
+| Phase 6 | Full regression suite (mandatory gate) | v7 | v6 |
+| Any phase | Whenever phase document requires real-router evidence | v7 | v6 |
 
 ### How to Run CHR Tests
 
-1. Read credentials from `chr.txt`.
-2. Set the host/password in the phase integration test file.
-3. Run the integration test target directly (not via `flutter test` CI sweep):
+1. Read credentials from `chr.txt` (v7) and `chr6.txt` (v6).
+2. Set host/port/password in the integration test file.
+3. Run directly (not via `flutter test` CI sweep):
    ```bash
-   # Dart SDK package (e.g. Phase 1)
-   dart test test/integration_chr_test.dart
+   # mikrotik_sdk package
+   dart test test/integration_chr_test.dart        # v7
+   dart test test/integration_chr_v6_test.dart     # v6
+   dart test test/integration_dashboard_v7_test.dart
+   dart test test/integration_dashboard_v6_test.dart
 
    # Flutter app package (Phase 2+)
    flutter test test/integration/chr_health_test.dart
    ```
-4. Record pass/fail results in the phase completion report.
-5. **Never commit `chr.txt` or embed credentials in test source files.**
+4. Record pass/fail in the phase completion report.
+5. **Never commit `chr.txt`, `chr6.txt`, or credentials in test source files.**
 
 ### Security Rules for CHR Usage
 
-- Credentials must be read from `chr.txt` at test runtime or set as local environment variables.
-- Test files must use constants or environment variables — never hardcoded production credentials in committed code.
-- If a test file already ran with hardcoded credentials (e.g. Phase 1 CHR test), do not re-commit that file with credentials still present; redact before any future commit.
-- The CHR password must never appear in logs, test output summaries, or completion reports.
+- Credentials must come from `chr.txt` / `chr6.txt` — never hardcoded in committed files.
+- Password must never appear in logs, test output summaries, or completion reports.
+- If a test file ran with hardcoded credentials, redact before any future commit.
 
 ### If CHR Is Unavailable
 
-If the CHR is unreachable during a phase:
+If a CHR instance is unreachable during a phase:
 1. Document the gap in the phase completion report.
 2. Continue with unit and mock tests.
 3. Do **not** mark integration tests as passing if they were not run.
 4. Flag as PENDING in the compatibility matrix.
+5. Try the other CHR instance if available.
+
+### CHR v6 Recovery Procedure
+
+If CHR v6 API becomes inaccessible:
+1. Check port: `nc -z -w 5 139.162.35.252 8728`
+2. If closed — login via weblish: `https://cloud.linode.com/linodes/101417810/lish/weblish`
+3. Run: `/ip service enable api` then `/ip service set api port=8728`
+4. If instance dead — rebuild: delete + create from image `private/40202857`, set config `kernel=linode/direct-disk virt_mode=fullvirt all-helpers=false`, attach to Linode firewall `CHR` (ID 88330218), boot.
 
 ---
 
