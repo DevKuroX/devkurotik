@@ -47,8 +47,12 @@ dependencies:
   mikrotik_sdk:
     path: ../../packages/mikrotik_sdk
 
+  # Share — Phase 5 (approved in MIGRATION_BLUEPRINT.md)
+  share_plus: ^10.0.0
+
   # Icons
   cupertino_icons: ^1.0.8
+  flutter_thermal_printer: ^2.0.1
 
 dev_dependencies:
   flutter_test:

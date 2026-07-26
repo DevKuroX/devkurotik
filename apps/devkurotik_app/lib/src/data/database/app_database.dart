@@ -1,4 +1,4 @@
-/// Drift AppDatabase — Phase 2 introduces RouterTable.
+/// Drift AppDatabase — Phase 5 adds VoucherBatchTable.
 ///
 /// Generated code lives in app_database.g.dart (via build_runner).
 library;
@@ -11,18 +11,19 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'router_table.dart';
+import 'voucher_batch_table.dart';
 
 part 'app_database.g.dart';
 
 /// The main Drift database for DevKuroTik.
 ///
-/// Schema version 1 — Router management.
-@DriftDatabase(tables: [RouterTable])
+/// Schema version 2 — Added VoucherBatchTable for Phase 5 Voucher Engine.
+@DriftDatabase(tables: [RouterTable, VoucherBatchTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -31,7 +32,9 @@ class AppDatabase extends _$AppDatabase {
         await m.createAll();
       },
       onUpgrade: (Migrator m, int from, int to) async {
-        // Future migrations go here.
+        if (from < 2) {
+          await m.createTable(voucherBatchTable);
+        }
       },
     );
   }

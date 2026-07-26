@@ -3,6 +3,7 @@
 /// Wraps all top-level screens in a BottomNavigationBar.
 /// Phase 3: Dashboard + Overview + Router Management tabs.
 /// Phase 4: Added Hotspot tab.
+/// Phase 5: Added Voucher tab (index 2; Overview→3, Routers→4).
 library;
 
 import 'package:flutter/material.dart';
@@ -40,6 +41,12 @@ class AppShell extends StatelessWidget {
             label: 'Hotspot',
           ),
           NavigationDestination(
+            key: Key('nav_voucher'),
+            icon: Icon(Icons.receipt_long_outlined),
+            selectedIcon: Icon(Icons.receipt_long),
+            label: 'Vouchers',
+          ),
+          NavigationDestination(
             key: Key('nav_overview'),
             icon: Icon(Icons.list_alt_outlined),
             selectedIcon: Icon(Icons.list_alt),
@@ -58,8 +65,9 @@ class AppShell extends StatelessWidget {
 
   int _indexFromLocation(String location) {
     if (location.startsWith(AppRoutes.hotspot)) return 1;
-    if (location.startsWith(AppRoutes.multiRouter)) return 2;
-    if (location.startsWith(AppRoutes.routerList)) return 3;
+    if (location.startsWith(AppRoutes.voucher)) return 2;
+    if (location.startsWith(AppRoutes.multiRouter)) return 3;
+    if (location.startsWith(AppRoutes.routerList)) return 4;
     return 0; // dashboard (default)
   }
 
@@ -70,8 +78,10 @@ class AppShell extends StatelessWidget {
       case 1:
         context.go(AppRoutes.hotspot);
       case 2:
-        context.go(AppRoutes.multiRouter);
+        context.go(AppRoutes.voucher);
       case 3:
+        context.go(AppRoutes.multiRouter);
+      case 4:
         context.go(AppRoutes.routerList);
     }
   }

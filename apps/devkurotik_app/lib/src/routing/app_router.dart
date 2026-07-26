@@ -1,10 +1,11 @@
-/// go_router routing configuration for Phase 2 + Phase 3 + Phase 4.
+/// go_router routing configuration for Phase 2 + Phase 3 + Phase 4 + Phase 5.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/models/hotspot_models.dart';
+import '../domain/models/voucher_models.dart';
 import '../ui/router_management/router_list_screen.dart';
 import '../ui/router_management/add_router_screen.dart';
 import '../ui/router_management/edit_router_screen.dart';
@@ -19,6 +20,12 @@ import '../ui/hotspot/edit_hotspot_user_screen.dart';
 import '../ui/hotspot/active_sessions_screen.dart';
 import '../ui/hotspot/hotspot_cookie_screen.dart';
 import '../ui/hotspot/hotspot_host_screen.dart';
+import '../ui/voucher/voucher_dashboard_screen.dart';
+import '../ui/voucher/generate_voucher_screen.dart';
+import '../ui/voucher/voucher_preview_screen.dart';
+import '../ui/voucher/voucher_history_screen.dart';
+import '../ui/voucher/quick_print_screen.dart';
+import '../ui/voucher/voucher_template_screen.dart';
 
 /// Route name constants.
 class AppRoutes {
@@ -50,6 +57,14 @@ class AppRoutes {
 
   static String editHotspotUser(String userId) =>
       '/hotspot/users/$userId/edit';
+
+  // ── Phase 5 — Voucher ──────────────────────────────────────────────────────
+  static const voucher = '/voucher';
+  static const generateVoucher = '/voucher/generate';
+  static const voucherPreview = '/voucher/preview';
+  static const voucherHistory = '/voucher/history';
+  static const quickPrint = '/voucher/quick-print';
+  static const voucherTemplate = '/voucher/template';
 }
 
 /// App router instance.
@@ -86,6 +101,13 @@ final appRouter = GoRouter(
           name: 'hotspot',
           builder: (BuildContext context, GoRouterState state) =>
               const HotspotDashboardScreen(),
+        ),
+        // ── Voucher dashboard (Phase 5) ─────────────────────────────────────
+        GoRoute(
+          path: AppRoutes.voucher,
+          name: 'voucher',
+          builder: (BuildContext context, GoRouterState state) =>
+              const VoucherDashboardScreen(),
         ),
       ],
     ),
@@ -159,6 +181,42 @@ final appRouter = GoRouter(
       name: 'hotspot-hosts',
       builder: (BuildContext context, GoRouterState state) =>
           const HotspotHostScreen(),
+    ),
+    // ── Voucher sub-routes (outside shell) ───────────────────────────────────
+    GoRoute(
+      path: AppRoutes.generateVoucher,
+      name: 'generate-voucher',
+      builder: (BuildContext context, GoRouterState state) =>
+          const GenerateVoucherScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.voucherPreview,
+      name: 'voucher-preview',
+      builder: (BuildContext context, GoRouterState state) {
+        final batch = state.extra as VoucherBatch?;
+        if (batch == null) {
+          return const VoucherDashboardScreen();
+        }
+        return VoucherPreviewScreen(batch: batch);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.voucherHistory,
+      name: 'voucher-history',
+      builder: (BuildContext context, GoRouterState state) =>
+          const VoucherHistoryScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.quickPrint,
+      name: 'quick-print',
+      builder: (BuildContext context, GoRouterState state) =>
+          const QuickPrintScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.voucherTemplate,
+      name: 'voucher-template',
+      builder: (BuildContext context, GoRouterState state) =>
+          const VoucherTemplateScreen(),
     ),
   ],
 );
