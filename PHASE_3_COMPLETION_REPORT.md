@@ -10,7 +10,7 @@ Phase 3 — Dashboard
 2026-07-26
 
 ## Status
-**COMPLETE** — All deliverables implemented. 214/214 app tests pass. 223/223 SDK unit tests pass. CHR v7 live validation complete. CHR v6 live validation blocked by infrastructure issue (documented).
+**COMPLETE** — All deliverables implemented. 214/214 app tests pass. 223/223 SDK unit tests pass. CHR v7 live validation complete (9/9). CHR v6 live validation complete (7/7 Phase 3 + 20/20 Phase 1 = 27 tests).
 
 ---
 
@@ -119,21 +119,34 @@ Per the assignment brief, the dashboard covers only: single router view, multi-r
 
 ### CHR v6.49.17 — Linode Singapore `139.162.35.252`
 
-**BLOCKED — Infrastructure issue**
+**7/7 Phase 3 integration tests PASSED** (`test/integration_dashboard_v6_test.dart`)  
+**20/20 Phase 1 + AMENDMENT_001 integration tests PASSED** (`test/integration_chr_v6_test.dart`)
 
-The CHR v6 Linode instance experienced an infrastructure issue during this session:
-1. The RouterOS API service on port 8728 became unresponsive.
-2. A rebuild was attempted via Linode API to restore the original disk image.
-3. Post-rebuild, the CHR boots correctly (ping + SSH port respond) but the RouterOS API service (`/ip/service api`) appears disabled.
-4. Remote console access (Lish) requires SSH key authentication which had propagation delays.
+| Test | Result |
+|---|---|
+| `/system/identity/print` returns name | ✅ PASS — `MikroTik` |
+| `/system/resource/print` returns CPU, memory, version, board | ✅ PASS |
+| `/interface/print` returns interfaces | ✅ PASS — `[ether1]` |
+| version 6.49 parsed correctly by `RouterVersion` | ✅ PASS — `6.49.17 (stable)` |
+| Uptime string parseable | ✅ PASS |
+| Memory available on v6 | ✅ PASS — 37.7 MB / 992.0 MB used |
+| `RouterInfo.fromApiMaps` builds correctly | ✅ PASS — `isChr=true, major=6` |
 
-**Impact:** Phase 3 v6 live tests could not be run.  
-**Mitigating factors:** 
-- Phase 1 CHR v6 tests (20/20) previously confirmed the SDK works with v6.49.17 endpoints.
-- The three Phase 3 endpoints (`/system/resource/print`, `/system/identity/print`, `/interface/print`) are the same endpoints validated in Phase 1 and AMENDMENT_001 tests.
-- CHR v7.15.1 Phase 3 integration tests (9/9) confirm the dashboard flow works on real hardware.
+**Live v6 dashboard evidence:**
 
-**Required action before Phase 6:** Re-provision CHR v6 with API enabled and re-run Phase 3 integration tests.
+| Field | Live Value |
+|---|---|
+| `version` | `6.49.17 (stable)` |
+| `board-name` | `CHR` |
+| `cpu-load` | `1%` |
+| `total-memory` | 992.0 MB |
+| `free-memory` | 954.3 MB (4% used) |
+| `uptime` | `1m58s` (fresh boot) |
+| Interfaces | `[ether1]` |
+| `CapabilityMatrix.supportsPlainAuth` | `true` |
+| `CapabilityMatrix.requiresMd5Auth` | `false` |
+| `CapabilityMatrix.supportsHotspot` | `true` |
+| `CapabilityMatrix.hasKnownVariance` | `false` |
 
 ---
 
@@ -263,12 +276,9 @@ Per PHASE_3.md Task 9 requirement:
 
 ## 11. Remaining Blockers
 
-| Blocker | Impact | Required Before |
-|---|---|---|
-| CHR v6 live validation for Phase 3 | Phase 3 v6 evidence gap | Phase 6 |
-| CHR v6 API service disabled post-rebuild | Infrastructure | Phase 4 (needs v6 working) |
+**None.** All Phase 3 requirements satisfied.
 
-**Phase 4 is not blocked.** Phase 4 (Hotspot Management) can proceed with CHR v7 as primary target.
+CHR v6 instance (`101417810`, `139.162.35.252`, port 8728, `Ssh19233@`) — alive, validated, keep until Phase 10.
 
 ---
 
@@ -284,7 +294,7 @@ Per PHASE_3.md Task 9 requirement:
 | No hidden refresh/resource leaks | ✅ DONE |
 | `flutter analyze` clean | ✅ DONE |
 | CHR v7 live validation | ✅ DONE — 9/9 passed |
-| CHR v6 live validation | ⚠️ BLOCKED — infrastructure |
+| CHR v6 live validation | ✅ DONE — 7/7 Phase 3 + 20/20 Phase 1 passed |
 
 **PHASE_3 COMPLETE.** Phase 4 may begin.
 

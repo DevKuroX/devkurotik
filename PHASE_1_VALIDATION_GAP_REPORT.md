@@ -124,7 +124,7 @@ The following protocol behaviors were validated using unit tests and mock TCP se
 |---|---|---|---|---|
 | v6.0 – v6.42 | MD5 challenge-response | ✅ | ❌ Not tested | PENDING — no v6.42 or earlier hardware available |
 | v6.43 – v6.48 | Plain text | ✅ | ❌ Not tested | PENDING — no hardware; unit tests cover auth boundary |
-| **v6.49.x (CHR 6.49.17)** | **Plain text** | ✅ | ✅ **20/20 PASSED** | **VALIDATED — Linode nanode 2026-07-26** |
+| **v6.49.x (CHR 6.49.17)** | **Plain text** | ✅ | ✅ **27/27 PASSED** | **VALIDATED — Linode ap-south 2026-07-26 (re-validated Phase 3)** |
 | v7.x (CHR 7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED — AWS CHR 2026-07-26** |
 | CHR v6.49.17 | Plain text | ✅ | ✅ **20/20 PASSED** | **VALIDATED — Linode ap-south** |
 | CHR v7.x (7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED — AWS EC2** |

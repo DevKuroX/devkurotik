@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 
 const _host = '139.162.35.252';
 const _username = 'admin';
-const _password = ''; // CHR v6 fresh install — empty password
+const _password = 'Ssh19233@'; // CHR v6 — password set via weblish
 const _port = 8728;
 
 void main() {
