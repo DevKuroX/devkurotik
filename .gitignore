@@ -1,0 +1,20 @@
+# Mikhmon legacy source (audit reference only, not part of DevKuroTik)
+mikhmonv3-master/
+mikhmonv3.zip
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.d
+build/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
