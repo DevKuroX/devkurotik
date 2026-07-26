@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # app — devkurotik_app
+  # ─────────────────────────────────────────────────────────────────────────────
+  app:
+    name: App — format / analyze / test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: apps/devkurotik_app
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.8'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Static analysis
+        run: flutter analyze --fatal-infos
+
+      - name: Run tests
+        run: flutter test --coverage
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # packages — SDK placeholders
+  # ─────────────────────────────────────────────────────────────────────────────
+  packages:
+    name: Packages — ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - mikrotik_sdk
+          - voucher_sdk
+          - routeros_script_sdk
+          - monitoring_sdk
+
+    defaults:
+      run:
+        working-directory: packages/${{ matrix.package }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.12.2'
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Static analysis
+        run: dart analyze --fatal-infos
+
+      - name: Run tests
+        run: dart test
