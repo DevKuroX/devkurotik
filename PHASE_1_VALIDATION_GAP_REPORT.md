@@ -122,14 +122,33 @@ The following protocol behaviors were validated using unit tests and mock TCP se
 
 | RouterOS Version | Auth Mode | Unit Test | Integration Test | Status |
 |---|---|---|---|---|
-| v6.0 – v6.42 | MD5 challenge-response | ✅ | ❌ Not tested | PENDING — no KVM on AWS AMI, no v6 image available |
-| v6.43+ | Plain text | ✅ | ❌ Not tested | PENDING — same constraint |
-| v7.x (CHR 7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED** |
-| CHR v6.x | Plain text | ✅ | ❌ Not tested | PENDING — AWS marketplace has v7 only |
-| CHR v7.x (7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED** |
+| v6.0 – v6.42 | MD5 challenge-response | ✅ | ❌ Not tested | PENDING — no v6.42 or earlier hardware available |
+| v6.43 – v6.48 | Plain text | ✅ | ❌ Not tested | PENDING — no hardware; unit tests cover auth boundary |
+| **v6.49.x (CHR 6.49.17)** | **Plain text** | ✅ | ✅ **20/20 PASSED** | **VALIDATED — Linode nanode 2026-07-26** |
+| v7.x (CHR 7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED — AWS CHR 2026-07-26** |
+| CHR v6.49.17 | Plain text | ✅ | ✅ **20/20 PASSED** | **VALIDATED — Linode ap-south** |
+| CHR v7.x (7.15.1) | Plain text | ✅ | ✅ **9/9 PASSED** | **VALIDATED — AWS EC2** |
 
-### v6 Gap Reason
-AWS EC2 marketplace does not offer RouterOS CHR v6 images (v7 only). AWS VPS instances do not support KVM nested virtualization required for CHR installation from ISO. Physical MikroTik hardware or a KVM-capable VPS provider (Vultr, Hetzner, DigitalOcean) is required for v6 validation.
+### v6.49.17 Validation Evidence (2026-07-26)
+
+| Field | Value |
+|---|---|
+| Host | `139.162.35.252` (Linode nanode, Singapore) |
+| Version | `6.49.17 (stable)` |
+| Board | `CHR` |
+| Architecture | `x86_64` |
+| Auth mode detected | plain text (post-v6.43) |
+| `supportsPlainAuth` | `true` |
+| `requiresMd5Auth` | `false` |
+| `supportsHotspot` | `true` |
+| `supportsApiSsl` | `true` |
+| `hasKnownVariance` | `false` |
+
+Integration test file: `packages/mikrotik_sdk/test/integration_chr_v6_test.dart` — **20/20 PASSED**
+
+### Remaining Gap — Pre-v6.43 MD5 auth
+
+MD5 challenge-response path (RouterOS < v6.43) remains unit-tested only. No CHR image available for this version range — CHR was introduced at v6.40 and rarely used below v6.43. Physical MikroTik hardware (hAP, RB750, etc. running v6.40–v6.42) is required for full validation. Required before Phase 6 closure.
 
 ### v6 Testing Options (for future execution)
 1. Physical MikroTik router (hAP, RB750, etc.)
