@@ -1,10 +1,11 @@
-/// go_router routing configuration for Phase 2 + Phase 3 + Phase 4 + Phase 5.
+/// go_router routing configuration for Phase 2 + Phase 3 + Phase 4 + Phase 5 + Phase 7.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/models/hotspot_models.dart';
+import '../domain/models/ppp_models.dart';
 import '../domain/models/voucher_models.dart';
 import '../ui/router_management/router_list_screen.dart';
 import '../ui/router_management/add_router_screen.dart';
@@ -26,6 +27,13 @@ import '../ui/voucher/voucher_preview_screen.dart';
 import '../ui/voucher/voucher_history_screen.dart';
 import '../ui/voucher/quick_print_screen.dart';
 import '../ui/voucher/voucher_template_screen.dart';
+import '../ui/ppp/ppp_dashboard_screen.dart';
+import '../ui/ppp/ppp_secret_list_screen.dart';
+import '../ui/ppp/add_ppp_secret_screen.dart';
+import '../ui/ppp/edit_ppp_secret_screen.dart';
+import '../ui/ppp/ppp_active_sessions_screen.dart';
+import '../ui/ppp/ppp_profiles_screen.dart';
+import '../ui/queue/simple_queue_screen.dart';
 
 /// Route name constants.
 class AppRoutes {
@@ -65,6 +73,21 @@ class AppRoutes {
   static const voucherHistory = '/voucher/history';
   static const quickPrint = '/voucher/quick-print';
   static const voucherTemplate = '/voucher/template';
+
+  // ── Phase 7 — PPP ─────────────────────────────────────────────────────────
+  static const ppp = '/ppp';
+  static const pppSecrets = '/ppp/secrets';
+  static const addPppSecret = '/ppp/secrets/add';
+  static const editPppSecret = '/ppp/secrets/:secretId/edit';
+  static const pppActiveSessions = '/ppp/sessions';
+  static const pppProfiles = '/ppp/profiles';
+
+  static String editPppSecretPath(String secretId) =>
+      '/ppp/secrets/$secretId/edit';
+
+  // ── Phase 7 — Queue ───────────────────────────────────────────────────────
+  static const queue = '/queue';
+  static const simpleQueues = '/queue/simple';
 }
 
 /// App router instance.
@@ -108,6 +131,20 @@ final appRouter = GoRouter(
           name: 'voucher',
           builder: (BuildContext context, GoRouterState state) =>
               const VoucherDashboardScreen(),
+        ),
+        // ── PPP dashboard (Phase 7) ─────────────────────────────────────────
+        GoRoute(
+          path: AppRoutes.ppp,
+          name: 'ppp',
+          builder: (BuildContext context, GoRouterState state) =>
+              const PppDashboardScreen(),
+        ),
+        // ── Queue dashboard (Phase 7) ───────────────────────────────────────
+        GoRoute(
+          path: AppRoutes.queue,
+          name: 'queue',
+          builder: (BuildContext context, GoRouterState state) =>
+              const SimpleQueueScreen(),
         ),
       ],
     ),
@@ -217,6 +254,50 @@ final appRouter = GoRouter(
       name: 'voucher-template',
       builder: (BuildContext context, GoRouterState state) =>
           const VoucherTemplateScreen(),
+    ),
+    // ── PPP sub-routes (Phase 7) ──────────────────────────────────────────────
+    GoRoute(
+      path: AppRoutes.pppSecrets,
+      name: 'ppp-secrets',
+      builder: (BuildContext context, GoRouterState state) =>
+          const PppSecretListScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.addPppSecret,
+      name: 'add-ppp-secret',
+      builder: (BuildContext context, GoRouterState state) =>
+          const AddPppSecretScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.editPppSecret,
+      name: 'edit-ppp-secret',
+      builder: (BuildContext context, GoRouterState state) {
+        final secretId = state.pathParameters['secretId']!;
+        final secret = state.extra as PppSecret?;
+        if (secret == null) {
+          return const PppSecretListScreen();
+        }
+        return EditPppSecretScreen(secretId: secretId, secret: secret);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.pppActiveSessions,
+      name: 'ppp-sessions',
+      builder: (BuildContext context, GoRouterState state) =>
+          const PppActiveSessionsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.pppProfiles,
+      name: 'ppp-profiles',
+      builder: (BuildContext context, GoRouterState state) =>
+          const PppProfilesScreen(),
+    ),
+    // ── Queue sub-routes (Phase 7) ────────────────────────────────────────────
+    GoRoute(
+      path: AppRoutes.simpleQueues,
+      name: 'simple-queues',
+      builder: (BuildContext context, GoRouterState state) =>
+          const SimpleQueueScreen(),
     ),
   ],
 );

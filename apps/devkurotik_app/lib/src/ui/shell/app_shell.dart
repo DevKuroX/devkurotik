@@ -4,6 +4,8 @@
 /// Phase 3: Dashboard + Overview + Router Management tabs.
 /// Phase 4: Added Hotspot tab.
 /// Phase 5: Added Voucher tab (index 2; Overview→3, Routers→4).
+/// Phase 7: Added PPP tab (index 4) and Queue tab (index 5);
+///           Overview→5, Routers→6.
 library;
 
 import 'package:flutter/material.dart';
@@ -47,6 +49,18 @@ class AppShell extends StatelessWidget {
             label: 'Vouchers',
           ),
           NavigationDestination(
+            key: Key('nav_ppp'),
+            icon: Icon(Icons.vpn_lock_outlined),
+            selectedIcon: Icon(Icons.vpn_lock),
+            label: 'PPP',
+          ),
+          NavigationDestination(
+            key: Key('nav_queue'),
+            icon: Icon(Icons.queue_outlined),
+            selectedIcon: Icon(Icons.queue),
+            label: 'Queue',
+          ),
+          NavigationDestination(
             key: Key('nav_overview'),
             icon: Icon(Icons.list_alt_outlined),
             selectedIcon: Icon(Icons.list_alt),
@@ -66,8 +80,10 @@ class AppShell extends StatelessWidget {
   int _indexFromLocation(String location) {
     if (location.startsWith(AppRoutes.hotspot)) return 1;
     if (location.startsWith(AppRoutes.voucher)) return 2;
-    if (location.startsWith(AppRoutes.multiRouter)) return 3;
-    if (location.startsWith(AppRoutes.routerList)) return 4;
+    if (location.startsWith(AppRoutes.ppp)) return 3;
+    if (location.startsWith(AppRoutes.queue)) return 4;
+    if (location.startsWith(AppRoutes.multiRouter)) return 5;
+    if (location.startsWith(AppRoutes.routerList)) return 6;
     return 0; // dashboard (default)
   }
 
@@ -80,8 +96,12 @@ class AppShell extends StatelessWidget {
       case 2:
         context.go(AppRoutes.voucher);
       case 3:
-        context.go(AppRoutes.multiRouter);
+        context.go(AppRoutes.ppp);
       case 4:
+        context.go(AppRoutes.queue);
+      case 5:
+        context.go(AppRoutes.multiRouter);
+      case 6:
         context.go(AppRoutes.routerList);
     }
   }
