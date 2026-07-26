@@ -74,3 +74,4 @@ apps/devkurotik_app/ios/Podfile.lock
 *.tmp
 *.bak
 chr.txt
+chr6.txt
