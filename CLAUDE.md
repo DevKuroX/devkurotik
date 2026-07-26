@@ -23,7 +23,7 @@ This document governs:
 - reviewers validating Claude-produced changes
 
 ## Last Updated
-2026-07-25
+2026-07-26
 
 ---
 
@@ -207,6 +207,69 @@ If the project owner asks Claude to work on DevKuroTik, the correct safe interpr
 
 ---
 
+## 12. Real Router Test Environment
+
+A live MikroTik CHR (Cloud Hosted Router) is available for integration testing.
+
+### Credentials
+
+Credentials are stored in `chr.txt` (gitignored, never committed).
+
+Format of `chr.txt`:
+```
+CHR (Cloud Hosted Router) — Real Test Environment
+IP: <ip>
+Password: <password>
+Version: RouterOS vX
+Note: For real integration testing
+```
+
+### When Claude Must Use the CHR
+
+Claude **must** run real-router integration tests against the CHR when:
+
+| Phase | Trigger |
+|---|---|
+| Phase 1 | SDK transport, auth, and command execution tests |
+| Phase 2 | Health check integration (connectivity + auth validation) |
+| Phase 3 | Dashboard data fetch from real router |
+| Phase 4 | Hotspot user list/add from real router |
+| Phase 5 | Voucher print flow from real router |
+| Phase 6 | Full regression suite against real router (mandatory gate) |
+| Any phase | Whenever the phase document requires real-router validation evidence |
+
+### How to Run CHR Tests
+
+1. Read credentials from `chr.txt`.
+2. Set the host/password in the phase integration test file.
+3. Run the integration test target directly (not via `flutter test` CI sweep):
+   ```bash
+   # Dart SDK package (e.g. Phase 1)
+   dart test test/integration_chr_test.dart
+
+   # Flutter app package (Phase 2+)
+   flutter test test/integration/chr_health_test.dart
+   ```
+4. Record pass/fail results in the phase completion report.
+5. **Never commit `chr.txt` or embed credentials in test source files.**
+
+### Security Rules for CHR Usage
+
+- Credentials must be read from `chr.txt` at test runtime or set as local environment variables.
+- Test files must use constants or environment variables — never hardcoded production credentials in committed code.
+- If a test file already ran with hardcoded credentials (e.g. Phase 1 CHR test), do not re-commit that file with credentials still present; redact before any future commit.
+- The CHR password must never appear in logs, test output summaries, or completion reports.
+
+### If CHR Is Unavailable
+
+If the CHR is unreachable during a phase:
+1. Document the gap in the phase completion report.
+2. Continue with unit and mock tests.
+3. Do **not** mark integration tests as passing if they were not run.
+4. Flag as PENDING in the compatibility matrix.
+
+---
+
 ## References
 - `README.md`
 - `AGENTS.md`
@@ -218,3 +281,4 @@ If the project owner asks Claude to work on DevKuroTik, the correct safe interpr
 - `DEPENDENCY_GRAPH.md`
 - `EXECUTION_ORDER.md`
 - `PHASE_0.md` ... `PHASE_10.md`
+- `chr.txt` (gitignored) — real router credentials
