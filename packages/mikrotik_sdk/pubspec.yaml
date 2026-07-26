@@ -1,14 +1,21 @@
 name: mikrotik_sdk
-description: "DevKuroTik — MikroTik RouterOS binary API transport, connection lifecycle, and authentication."
-version: 0.0.1
+description: "DevKuroTik — MikroTik RouterOS binary API transport, connection lifecycle, authentication, and command execution."
+version: 0.1.0
 publish_to: 'none'
 
 environment:
   sdk: ^3.12.2
 
 dependencies:
-  # No dependencies yet — implementation begins in Phase 1
+  # MD5 for pre-v6.43 challenge-response authentication
+  crypto: ^3.0.7
+
+  # Structured logging with credential redaction support
+  logging: ^1.3.0
 
 dev_dependencies:
   test: ^1.25.15
   lints: ^5.1.1
+
+  # Fake async for timeout/retry tests
+  fake_async: ^1.3.3
