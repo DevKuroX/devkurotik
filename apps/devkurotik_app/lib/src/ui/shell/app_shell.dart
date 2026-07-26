@@ -1,7 +1,8 @@
 /// AppShell — persistent bottom navigation shell.
 ///
 /// Wraps all top-level screens in a BottomNavigationBar.
-/// Added in Phase 3 to support Dashboard + Router Management + Overview tabs.
+/// Phase 3: Dashboard + Overview + Router Management tabs.
+/// Phase 4: Added Hotspot tab.
 library;
 
 import 'package:flutter/material.dart';
@@ -23,13 +24,20 @@ class AppShell extends StatelessWidget {
       body: child,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _indexFromLocation(location),
-        onDestinationSelected: (index) => _onDestinationSelected(context, index),
+        onDestinationSelected: (index) =>
+            _onDestinationSelected(context, index),
         destinations: const [
           NavigationDestination(
             key: Key('nav_dashboard'),
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
             label: 'Dashboard',
+          ),
+          NavigationDestination(
+            key: Key('nav_hotspot'),
+            icon: Icon(Icons.wifi_outlined),
+            selectedIcon: Icon(Icons.wifi),
+            label: 'Hotspot',
           ),
           NavigationDestination(
             key: Key('nav_overview'),
@@ -49,8 +57,9 @@ class AppShell extends StatelessWidget {
   }
 
   int _indexFromLocation(String location) {
-    if (location.startsWith(AppRoutes.multiRouter)) return 1;
-    if (location.startsWith(AppRoutes.routerList)) return 2;
+    if (location.startsWith(AppRoutes.hotspot)) return 1;
+    if (location.startsWith(AppRoutes.multiRouter)) return 2;
+    if (location.startsWith(AppRoutes.routerList)) return 3;
     return 0; // dashboard (default)
   }
 
@@ -59,8 +68,10 @@ class AppShell extends StatelessWidget {
       case 0:
         context.go(AppRoutes.dashboard);
       case 1:
-        context.go(AppRoutes.multiRouter);
+        context.go(AppRoutes.hotspot);
       case 2:
+        context.go(AppRoutes.multiRouter);
+      case 3:
         context.go(AppRoutes.routerList);
     }
   }
