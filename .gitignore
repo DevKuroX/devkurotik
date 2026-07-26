@@ -1,20 +1,75 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# DevKuroTik .gitignore
+# ──────────────────────────────────────────────────────────────────────────────
+
 # Mikhmon legacy source (audit reference only, not part of DevKuroTik)
 mikhmonv3-master/
 mikhmonv3.zip
 
-# Build artifacts
-*.o
-*.a
-*.so
-*.d
-build/
-*.log
+# ──────────────────────────────────────────────────────────────────────────────
+# Dart / Flutter
+# ──────────────────────────────────────────────────────────────────────────────
 
-# OS files
+# Build output
+build/
+.dart_tool/
+
+# Generated code — never commit generated files
+*.g.dart
+*.freezed.dart
+*.gr.dart
+
+# Pub
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+
+# Flutter plugin cache
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Coverage
+coverage/
+lcov.info
+
+# ──────────────────────────────────────────────────────────────────────────────
+# OS
+# ──────────────────────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+*.log
 
+# ──────────────────────────────────────────────────────────────────────────────
 # IDE
+# ──────────────────────────────────────────────────────────────────────────────
 .idea/
-.vscode/
 *.iml
+
+# VS Code — exclude user-specific settings but allow workspace settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Native Android / iOS build artifacts
+# ──────────────────────────────────────────────────────────────────────────────
+apps/devkurotik_app/android/.gradle/
+apps/devkurotik_app/android/captures/
+apps/devkurotik_app/android/local.properties
+apps/devkurotik_app/android/GeneratedPluginRegistrant.java
+apps/devkurotik_app/android/key.properties
+apps/devkurotik_app/android/**/*.keystore
+apps/devkurotik_app/android/**/*.jks
+
+apps/devkurotik_app/ios/.symlinks/
+apps/devkurotik_app/ios/Flutter/flutter_export_environment.sh
+apps/devkurotik_app/ios/Pods/
+apps/devkurotik_app/ios/Podfile.lock
+
+# ──────────────────────────────────────────────────────────────────────────────
+# CI / tooling
+# ──────────────────────────────────────────────────────────────────────────────
+*.tmp
+*.bak

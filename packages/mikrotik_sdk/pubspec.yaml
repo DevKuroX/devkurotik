@@ -1,0 +1,14 @@
+name: mikrotik_sdk
+description: "DevKuroTik — MikroTik RouterOS binary API transport, connection lifecycle, and authentication."
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  # No dependencies yet — implementation begins in Phase 1
+
+dev_dependencies:
+  test: ^1.25.15
+  lints: ^5.1.1

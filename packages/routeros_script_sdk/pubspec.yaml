@@ -1,0 +1,14 @@
+name: routeros_script_sdk
+description: "DevKuroTik — on-login metadata parsing, OnLoginScriptGenerator, and Quick Print encoding/decoding."
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  # No dependencies yet — implementation begins in Phase 6
+
+dev_dependencies:
+  test: ^1.25.15
+  lints: ^5.1.1

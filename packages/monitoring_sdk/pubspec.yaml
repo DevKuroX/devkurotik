@@ -1,0 +1,14 @@
+name: monitoring_sdk
+description: "DevKuroTik — Dashboard-oriented resource retrieval, traffic abstractions, and health-check models."
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  # No dependencies yet — implementation begins in Phase 3
+
+dev_dependencies:
+  test: ^1.25.15
+  lints: ^5.1.1
