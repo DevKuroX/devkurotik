@@ -59,3 +59,9 @@ export 'src/logging/mikrotik_logger.dart';
 export 'src/utils/mikrotik_credentials.dart';
 export 'src/utils/routeros_format.dart';
 export 'src/utils/routeros_random.dart';
+
+// ─── Compatibility layer (AMENDMENT_001) ─────────────────────────────────────
+export 'src/compatibility/router_version.dart';
+export 'src/compatibility/router_info.dart';
+export 'src/compatibility/capability_matrix.dart';
+export 'src/compatibility/capability_detector.dart';

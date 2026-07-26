@@ -195,9 +195,37 @@ Phase 1 is **conditionally closed** with the following status:
 
 ## 9. Validation Plan (When Hardware Is Available)
 
+### AMENDMENT_001 CapabilityDetector — CHR v7.15.1 VALIDATED (2026-07-26)
+
+`CapabilityDetector.detect()` executed against live CHR v7.15.1 (54.147.121.92).
+
+| Field | Live Value |
+|---|---|
+| `RouterInfo.version.raw` | `7.15.1 (stable)` |
+| `RouterInfo.board` | `CHR Amazon EC2 t3.small` |
+| `RouterInfo.isChr` | `true` |
+| `RouterInfo.isVirtual` | `true` |
+| `RouterInfo.architecture` | `x86_64` |
+| `RouterInfo.cpuCount` | `2` |
+| `RouterInfo.platform` | `MikroTik` |
+| `CapabilityMatrix.supportsPlainAuth` | `true` |
+| `CapabilityMatrix.requiresMd5Auth` | `false` |
+| `CapabilityMatrix.supportsHotspot` | `true` |
+| `CapabilityMatrix.supportsApiSsl` | `true` |
+| `CapabilityMatrix.hasKnownVariance` | `false` |
+
+**Integration test:** `test/integration_compat_test.dart` — **10/10 PASSED**
+
+**Discovery:** Real CHR v7 returns `board-name = "CHR Amazon EC2 t3.small"` (not just `"CHR"`).
+`RouterInfo.isChr` updated to use `startsWith("CHR")` prefix match.
+
+---
+
+### Remaining v6 Validation (Pending Hardware)
+
 When a RouterOS test environment is provisioned:
 
-1. Deploy a test router (physical or CHR) with a known configuration.
+1. Deploy a test router (physical or CHR v6) with a known configuration.
 2. Create a test user with restricted read-only API access.
 3. Run the integration test suite targeting the test router.
 4. Validate:
@@ -207,8 +235,9 @@ When a RouterOS test environment is provisioned:
    - `/system/resource/print` returns expected fields
    - Auth failure returns `RouterosAuthException`
    - Connection to wrong port returns `RouterosConnectionException`
+   - `CapabilityDetector.detect()` returns correct `RouterVersion` for v6
 5. Commit the integration test results as evidence.
-6. Update this document to mark integration tests as PASS.
+6. Update this document to mark v6 integration tests as PASS.
 
 ---
 
