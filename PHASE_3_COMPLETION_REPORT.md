@@ -278,7 +278,7 @@ Per PHASE_3.md Task 9 requirement:
 
 **None.** All Phase 3 requirements satisfied.
 
-CHR v6 instance (`101417810`, `139.162.35.252`, port 8728, `Ssh19233@`) — alive, validated, keep until Phase 10.
+CHR v6 instance (`101417810`, `139.162.35.252`, port 8728, `[REDACTED — rotated via SECURITY_HOTFIX_001]`) — alive, validated, keep until Phase 10.
 
 ---
 
